@@ -10,6 +10,9 @@ Live at (AWS S3 & Cloudfront)
 
 http://d2rqmsx5kuii78.cloudfront.net
 
+Storybook at
+http://ec2-15-164-215-34.ap-northeast-2.compute.amazonaws.com:9009
+
 #### Features
 **1. Backend communication**
 - RESTful API, ajax
