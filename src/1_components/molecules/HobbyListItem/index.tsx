@@ -7,7 +7,7 @@ import TimestampInfo from '../../atoms/TimestampInfo';
 import Button from '../../atoms/Button';
 import ProcessingOverlay from '../../atoms/ProcessingOverlay';
 
-import { getHobbyPassionLevel } from '../../../4_services/hobby-service';
+import { getHobbyPassionColor, getHobbyPassionLevel } from '../../../4_services/hobby-service';
 
 import { alpha, colors } from '../../../5_constants/theme';
 
@@ -30,16 +30,21 @@ const HobbyWrapper = styled.div`
 `;
 const Title = styled.div`
   display: inline-block;
-  width: 60%;
+  width: 55%;
   font-size: 1.1rem;
   font-weight: bold;
   vertical-align: middle;
 `;
 const PassionLevel = styled.div`
   display: inline-block;
-  width: 14%;
+  width: 19%;
   min-width: 9rem;
+  font-size: 0.9rem;
+`;
+const PassionColor = styled.span<{level: T.HOBBY_PASSION_LEVEL}>`
   font-size: 1rem;
+  font-weight: 600;
+  color: ${props => getHobbyPassionColor(props.level)};
 `;
 const Year = styled.div`
   display: inline-block;
@@ -82,12 +87,19 @@ const HobbyListItem: FC<Props> = (
   { hobby, isProcessing, onDelete, className }: Props
 ) => {
   const handleDelete: () => void = () => onDelete(hobby);
+  const passion: React.ReactNode = (
+    <PassionColor level={hobby.passionLevel}>
+      {getHobbyPassionLevel(hobby.passionLevel)}
+    </PassionColor>
+  );
 
   return (
     <Root className={className} >
       <HobbyWrapper>
         <Title>{hobby.name}</Title>
-        <PassionLevel>Passion: {getHobbyPassionLevel(hobby.passionLevel)}</PassionLevel>
+        <PassionLevel>
+          Passion: {passion}
+        </PassionLevel>
         <Year>Since {hobby.year}</Year>
         <ButtonWrapper>
           <DeleteBtn onClick={handleDelete}>Delete</DeleteBtn>
